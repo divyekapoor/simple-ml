@@ -18,3 +18,6 @@ process:
  1. A SGD with AdaGrad controlling the learning rate.
  1. A SGD with AdaDelta controlling the learning rate.
  1. A SGD with RMSProp controlling the learning rate.
+
+# License
+MIT
