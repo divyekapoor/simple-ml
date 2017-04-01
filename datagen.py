@@ -34,6 +34,15 @@ def test_datagen() -> Generator[Entry, None, None]:
         yield Entry(x, underlying_function(x))
 
 
+def categorical_feature(x: float) -> int:
+    result = underlying_function(x)
+    if result < 0:
+        return -1
+    elif result > 0:
+        return 1
+    return 0
+
+
 def main():
     for i in range(0, 5000):
         x = float(i) / 1000.
