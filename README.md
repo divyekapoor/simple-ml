@@ -19,5 +19,13 @@ process:
  1. A SGD with AdaDelta controlling the learning rate.
  1. A SGD with RMSProp controlling the learning rate.
 
+# Installation instructions
+
+   ```sh
+   $ virtualenv -p python3 venv
+   $ source venv/bin/activate
+   $ pip3 install -U -r requirements.txt
+   ```
+
 # License
 MIT
