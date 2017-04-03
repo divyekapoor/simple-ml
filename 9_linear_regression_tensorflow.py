@@ -37,44 +37,41 @@ class Model(object):
         self.test_values = None  # type: tf.Constant
         self.test_labels = None  # type: tf.Constant
         self.weights = None  # type: tf.Constant
-        self.graph = tf.Graph()
 
-        with self.graph.as_default():
-            self.weights = tf.constant(
-                [random.random() for _ in range(len(self.training_datagen))]
-            )
-            with tf.variable_scope("training_data") as training_scope:
-                self.training_values = tf.constant(
-                    [entry.value for entry in self.training_datagen],
-                    name="training_values",
-                    dtype=tf.float32,
-                    shape=[len(self.training_datagen)],
-                    verify_shape=True)
-                self.training_labels = tf.constant(
-                    [entry.label for entry in self.training_datagen],
-                    name="training_labels",
-                    dtype=tf.float32,
-                    shape=[len(self.training_datagen)],
-                    verify_shape=True)
-            with tf.variable_scope("test_data") as test_scope:
-                self.test_values = tf.constant(
-                    [entry.value for entry in self.test_datagen],
-                    name="test_values",
-                    dtype=tf.float32,
-                    shape=[len(self.test_datagen)],
-                    verify_shape=True)
-                self.test_labels = tf.constant(
-                    [entry.label for entry in self.test_datagen],
-                    name="test_label",
-                    dtype=tf.float32,
-                    shape=[len(self.test_datagen)],
-                    verify_shape=True)
-            self.init_op = tf.global_variables_initializer()
+        self.weights = tf.constant(
+            [random.random() for _ in range(len(self.training_datagen))]
+        )
+
+        with tf.variable_scope("training_data") as training_scope:
+            self.training_values = tf.constant(
+                [entry.value for entry in self.training_datagen],
+                name="training_values",
+                dtype=tf.float32,
+                shape=[len(self.training_datagen)],
+                verify_shape=True)
+            self.training_labels = tf.constant(
+                [entry.label for entry in self.training_datagen],
+                name="training_labels",
+                dtype=tf.float32,
+                shape=[len(self.training_datagen)],
+                verify_shape=True)
+        with tf.variable_scope("test_data") as test_scope:
+            self.test_values = tf.constant(
+                [entry.value for entry in self.test_datagen],
+                name="test_values",
+                dtype=tf.float32,
+                shape=[len(self.test_datagen)],
+                verify_shape=True)
+            self.test_labels = tf.constant(
+                [entry.label for entry in self.test_datagen],
+                name="test_label",
+                dtype=tf.float32,
+                shape=[len(self.test_datagen)],
+                verify_shape=True)
 
     def _training_data(self):
         return {
                    "value": self.training_values,
-                "weights": self.weights
                }, self.training_labels
 
     def _test_data(self):
@@ -96,14 +93,13 @@ class Model(object):
         update function by taking into account the fact that while getting 
         the gradients, we should be lazy in computing the regularization 
         penalty to after the weight update."""
-        with self.graph.as_default():
-            self.linear_regressor = learn.LinearRegressor(
-                feature_columns=[layers.real_valued_column("value")],
-                optimizer="SGD")
-            self.linear_regressor.fit(
-                input_fn=self._training_data,
-                max_steps=max_steps,
-                monitors=[])
+        self.linear_regressor = learn.LinearRegressor(
+            feature_columns=[layers.real_valued_column("value")],
+            optimizer="SGD")
+        self.linear_regressor.fit(
+            input_fn=self._training_data,
+            max_steps=max_steps,
+            monitors=[])
 
     def test(self) -> dict:
         return self.linear_regressor.evaluate(

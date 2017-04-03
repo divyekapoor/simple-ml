@@ -25,4 +25,6 @@ cd tensorflow
 bazel build --config=opt //tensorflow/tools/pip_package:build_pip_package
 
 bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
-sudo pip3 install /tmp/tensorflow_pkg/*.whl
+
+source venv/bin/activate
+pip3 install /tmp/tensorflow_pkg/*.whl
