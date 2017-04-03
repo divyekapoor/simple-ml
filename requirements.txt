@@ -2,10 +2,14 @@ appdirs==1.4.3
 numpy==1.12.1
 olefile==0.44
 packaging==16.8
+pandas==0.19.2
 Pillow==4.0.0
 pkg-resources==0.0.0
 protobuf==3.2.0
 pyparsing==2.2.0
+python-dateutil==2.6.0
+pytz==2017.2
 six==1.10.0
-tensorflow==1.1.0-rc0
+tensorflow==1.1.0rc0
 tflearn==0.3
+Werkzeug==0.12.1
