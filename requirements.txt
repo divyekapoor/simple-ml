@@ -10,6 +10,6 @@ pyparsing==2.2.0
 python-dateutil==2.6.0
 pytz==2017.2
 six==1.10.0
-tensorflow==1.1.0rc0
+tensorflow==1.1.0rc1
 tflearn==0.3
 Werkzeug==0.12.1
